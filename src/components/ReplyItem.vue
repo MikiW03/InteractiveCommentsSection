@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <textarea class="comment-adding-input" v-model="content" type="text" placeholder="Add a comment..."></textarea>
-        <img class="comment-adding-img" :src="currentUser?.image.png" alt="image of current user">
-        <button class="comment-adding-btn" @click="comment($event, content)">send</button>
+    <div class="reply">
+        <img class="reply-img" :src="currentUser?.image.png" alt="image of current user">
+        <textarea class="reply-input" v-model="content" placeholder="Add a comment..."></textarea>
+        <button class="reply-btn" @click="reply($event, content, replyingTo, id); $emit('replied')">reply</button>
     </div>
 </template>
 
@@ -12,19 +12,21 @@ import useComments from '../composables/comments'
 
 defineProps({
     currentUser: Object,
+    replyingTo: String,
+    id: String,
 })
 
-const content = ref(null)
+const content = ref("")
 
 const data = inject('data')
-const { comment } = useComments(data)
+const { reply } = useComments(data)
 
 </script>
 
 <style>
-.comment-adding {
+.reply {
     background-color: var(--white);
-    margin: 0 1em 2em 1em;
+    margin: 1em 0 0 0;
     padding: 1em;
     border-radius: 5px;
     box-shadow: 0 0 5px 5px var(--light-gray);
@@ -38,7 +40,7 @@ const { comment } = useComments(data)
 }
 
 @media screen and (min-width: 750px) {
-    .comment-adding {
+    .reply {
         align-items: flex-start;
         gap: 1em;
         grid-template-columns: .5fr 5fr 1fr;
@@ -48,7 +50,7 @@ const { comment } = useComments(data)
     }
 }
 
-.comment-adding-input {
+.reply-input {
     font-family: inherit;
 
     resize: none;
@@ -62,13 +64,13 @@ const { comment } = useComments(data)
     grid-area: input;
 }
 
-.comment-adding-img {
+.reply-img {
     max-width: 35px;
 
     grid-area: img;
 }
 
-.comment-adding-btn {
+.reply-btn {
     text-transform: uppercase;
     padding: 1em 1em;
     background-color: var(--moderate-blue);

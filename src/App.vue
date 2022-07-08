@@ -1,21 +1,25 @@
 <template>
-    <div class="comments">
-        <CommentItem class="comment" v-for="comment, index in data?.comments" :key="index" v-bind="comment"
-            :currentUser="data.currentUser" />
+    <div class="content">
+        <div class="comments">
+            <CommentItem class="comment" v-for="comment, index in data?.comments" :key="index" v-bind="comment"
+                :currentUser="data.currentUser" />
+        </div>
+        <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
     </div>
-    <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
-    <DeleteComment v-show="false" />
+    <DeleteModal v-show="false" />
     {{ error }}
 </template>
 
 <script setup>
 import CommentItem from './components/CommentItem.vue'
 import CommentAdding from './components/CommentAdding.vue'
-import DeleteComment from './components/DeleteComment.vue'
+import DeleteModal from './components/DeleteModal.vue'
 import useFetch from './composables/fetch'
+import { provide } from 'vue'
 
 const { data, error } = useFetch("data.json")
 
+provide('data', data)
 
 </script>
 
@@ -54,12 +58,36 @@ body {
     font-size: 16px;
 }
 
+button,
+input,
+textarea {
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.5;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    max-width: 700px;
+}
+
 .comments {
-    padding: 1em 1em 1em 0;
-    width: 100vw;
+    padding: 1em 1em 1em 1em;
 
     display: flex;
     flex-direction: column;
-    justify-content: right;
+    align-items: flex-end;
+}
+
+@media screen and (min-width: 750px) {
+    :root {
+        --reply-indentation: 2.5em;
+    }
 }
 </style>

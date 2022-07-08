@@ -1,8 +1,8 @@
 <template >
-    <div class="wrapper">
+    <div class="wrapper" data-dislike-active data-like-active>
         <button class="plus"><img src="images/icon-plus.svg" alt="plus"></button>
         <p class="score">{{ score }}</p>
-        <button class="minus"><img src="images/icon-minus.svg" alt="minus"></button>
+        <button class="minus"> <img src=" images/icon-minus.svg" alt="minus"></button>
     </div>
 </template>
 
@@ -12,6 +12,8 @@ import { defineProps } from 'vue'
 defineProps({
     score: Number,
     style: String,
+    replyingTo: String,
+    id: String,
 })
 
 </script>
@@ -20,11 +22,19 @@ defineProps({
 .wrapper {
     background-color: var(--very-light-gray);
     border-radius: 10px;
+    min-width: 35px;
+    max-width: 100px;
 
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
+}
+
+@media screen and (min-width: 750px) {
+    .wrapper {
+        flex-direction: column;
+    }
 }
 
 .wrapper>* {

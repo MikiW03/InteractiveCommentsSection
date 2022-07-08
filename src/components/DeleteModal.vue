@@ -29,6 +29,7 @@
 .popup-window {
     background-color: var(--white);
     position: fixed;
+    max-width: 400px;
     margin: 1em;
     padding: 2em;
     border-radius: 10px;
