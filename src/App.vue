@@ -7,7 +7,6 @@
         <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
     </div>
     <DeleteModal v-show="false" />
-    {{ error }}
 </template>
 
 <script setup>
@@ -15,11 +14,24 @@ import CommentItem from './components/CommentItem.vue'
 import CommentAdding from './components/CommentAdding.vue'
 import DeleteModal from './components/DeleteModal.vue'
 import useFetch from './composables/fetch'
-import { provide } from 'vue'
+import { provide, watch, ref } from 'vue'
 
-const { data, error } = useFetch("data.json")
+const data = ref(null)
+if (window.localStorage.getItem("data")) {
+    data.value = JSON.parse(window.localStorage.getItem("data"))
+} else {
+    ({ data: data.value } = useFetch("data.json"))
+}
 
 provide('data', data)
+
+watch(
+    () => data.value,
+    (newValue) => {
+        window.localStorage.setItem("data", JSON.stringify(newValue))
+    },
+    { deep: true }
+)
 
 </script>
 

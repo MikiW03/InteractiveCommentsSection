@@ -167,8 +167,8 @@ const { remove } = useComments(data)
         grid-gap: 1.2em;
     }
 
-    .score {
-        flex-direction: column;
+    .comment-score {
+        align-self: start;
     }
 
     .comment-replies {

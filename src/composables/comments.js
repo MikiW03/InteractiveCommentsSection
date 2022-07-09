@@ -1,5 +1,6 @@
 export default function useComments(data) {
   function comment(e, content) {
+    console.log(data);
     addComment(e, content, "", false);
   }
 
@@ -8,7 +9,6 @@ export default function useComments(data) {
   }
 
   function addComment(e, content, replyingTo, reply, OGid = undefined) {
-    console.log(OGid);
     const id = !replyingTo
       ? data.value.comments.length + 1
       : `${OGid.split(".")[0]}.${
@@ -38,7 +38,6 @@ export default function useComments(data) {
   }
 
   function remove(id) {
-    console.log(id);
     const isReply = id.split(".").length > 1;
     if (!isReply) {
       data.value.comments.splice([id.split(".")[0] - 1], 1);
