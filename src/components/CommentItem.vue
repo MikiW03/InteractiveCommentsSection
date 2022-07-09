@@ -12,17 +12,21 @@
                 <span class="comment-date">{{ createdAt }}
                 </span>
             </div>
-            <div class="comment-content">
+            <div class="comment-content" v-if="!editing">
                 <span class="comment-reply-tag" v-if="replyingTo">
                     @{{ replyingTo }}
                 </span>
                 {{ content }}
             </div>
+            <div v-else class="editing-field">
+                <textarea type="text" class="editing-input" v-model="newContent"></textarea>
+                <button class="editing-button" @click="edit(id, newContent); editing = !editing">update</button>
+            </div>
             <ScoreItem class="comment-score" :score="score" :replyingTo="replyingTo" :id="id" />
             <button class="comment-delete" v-if="isUserCurrent(user, currentUser)" @click="remove(id)"><img src="
                 images/icon-delete.svg" alt="delete icon">Delete</button>
-            <button class="comment-reply-edit" v-if="isUserCurrent(user, currentUser)"><img src="images/icon-edit.svg"
-                    alt="edit icon">Edit</button>
+            <button class="comment-reply-edit" v-if="isUserCurrent(user, currentUser)" @click="editing = !editing"><img
+                    src="images/icon-edit.svg" alt="edit icon">Edit</button>
             <button class="comment-reply-edit" v-else @click="replying = !replying"><img src="images/icon-reply.svg"
                     alt="reply icon">
                 Reply</button>
@@ -44,7 +48,7 @@ import ReplyItem from './ReplyItem'
 import useComments from '../composables/comments'
 
 
-defineProps({
+const props = defineProps({
     content: String,
     createdAt: String,
     id: String,
@@ -57,13 +61,16 @@ defineProps({
 })
 
 const replying = ref(false)
+const editing = ref(false)
+
+const newContent = ref(props.content)
 
 function isUserCurrent(user, currentUser) {
     return user.username == currentUser.username
 }
 
 const data = inject('data')
-const { remove } = useComments(data)
+const { remove, edit } = useComments(data)
 
 </script>
 
@@ -149,10 +156,19 @@ const { remove } = useComments(data)
 
 .comment-replies {
     border-left: 3px solid var(--light-gray);
+    margin-top: 1em;
 
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.comment-replies div:first-of-type {
+    margin-top: 0;
+}
+
+.comment-replies:empty {
+    margin: 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -177,12 +193,45 @@ const { remove } = useComments(data)
     }
 }
 
+.editing-field {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: .5em;
+}
+
+.editing-input {
+    width: 100%;
+    font-family: inherit;
+
+    resize: none;
+    padding: 1em 1.5em;
+    word-wrap: break-word;
+    word-break: break-all;
+    min-height: 100px;
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+
+    grid-area: input;
+}
+
+.editing-button {
+    text-transform: uppercase;
+    padding: 1em 1em;
+    background-color: var(--moderate-blue);
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    font-weight: 700;
+}
+
 /* DEFINING GRID TEMPLATES */
 .comment-header {
     grid-area: header;
 }
 
-.comment-content {
+.comment-content,
+.editing-field {
     grid-area: content;
 }
 

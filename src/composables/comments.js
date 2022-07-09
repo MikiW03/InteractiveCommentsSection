@@ -37,6 +37,17 @@ export default function useComments(data) {
     }
   }
 
+  function edit(id, content) {
+    const isReply = id.split(".").length > 1;
+    if (!isReply) {
+      data.value.comments[id.split(".")[0] - 1].content = content;
+    } else {
+      data.value.comments[id.split(".")[0] - 1].replies[
+        id.split(".")[1] - 1
+      ].content = content;
+    }
+  }
+
   function remove(id) {
     const isReply = id.split(".").length > 1;
     if (!isReply) {
@@ -53,5 +64,6 @@ export default function useComments(data) {
     comment,
     reply,
     remove,
+    edit,
   };
 }
