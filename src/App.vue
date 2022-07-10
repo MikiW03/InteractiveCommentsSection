@@ -6,7 +6,8 @@
         </div>
         <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
     </div>
-    <DeleteModal v-show="removing" :comment="comment" :ogId="ogId" @hideModal="hideModal" />
+    <DeleteModal @wheel.prevent @touchmove.prevent @scroll.prevent v-show="removing" :comment="comment" :ogId="ogId"
+        @hideModal="hideModal" />
     {{ error }}
 </template>
 
