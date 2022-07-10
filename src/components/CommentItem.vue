@@ -22,7 +22,7 @@
                 <textarea type="text" class="editing-input" v-model="newContent"></textarea>
                 <button class="editing-button" @click="edit(comment.id, newContent); editing = !editing">update</button>
             </div>
-            <ScoreItem class="comment-score" :score="comment.score" :replyingTo="comment.replyingTo" :id="comment.id" />
+            <ScoreItem class="comment-score" :comment="comment" />
             <button class="comment-delete" v-if="isUserCurrent(comment.user, currentUser)"
                 @click="$emit('showModal', comment.id)"><img src="
                 images/icon-delete.svg" alt="delete icon">Delete</button>
@@ -33,10 +33,11 @@
                 Reply</button>
 
         </div>
-        <ReplyItem v-if="replying" @replied="replying = false" :id="comment.id" :replyingTo="comment.user.username"
-            :currentUser="currentUser"></ReplyItem>
+        <ReplyItem v-if="replying" @replied="replying = false" :comment="comment" :currentUser="currentUser"
+            :replyingTo="comment.user.username">
+        </ReplyItem>
         <div class="comment-replies">
-            <CommentItem class="comment" v-for="comment, index in comment.replies" :key="index" :comment="comment"
+            <CommentItem class="comment" v-for="comment in comment.replies" :key="comment.id" :comment="comment"
                 :currentUser="currentUser" @showModal="$emit('showModal', comment.id)" />
         </div>
     </div>
@@ -57,9 +58,7 @@ const props = defineProps({
 
 const replying = ref(false)
 const editing = ref(false)
-// const removing = ref(false)
-
-const newContent = ref(props.content)
+const newContent = ref(props.comment.content)
 
 function isUserCurrent(user, currentUser) {
     return user.username == currentUser.username

@@ -2,7 +2,8 @@
     <div class="reply">
         <img class="reply-img" :src="currentUser?.image.png" alt="image of current user">
         <textarea class="reply-input" v-model="content" placeholder="Add a comment..."></textarea>
-        <button class="reply-btn" @click="reply($event, content, replyingTo, id); $emit('replied')">reply</button>
+        <button class="reply-btn"
+            @click="reply($event, content, replyingTo, comment.id); $emit('replied')">reply</button>
     </div>
 </template>
 
@@ -11,9 +12,10 @@ import { defineProps, inject, ref } from 'vue'
 import useComments from '../composables/comments'
 
 defineProps({
+    comment: Object,
     currentUser: Object,
-    replyingTo: String,
-    id: String,
+
+    replyingTo: String
 })
 
 const content = ref("")

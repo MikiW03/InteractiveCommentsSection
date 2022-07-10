@@ -1,7 +1,7 @@
 <template >
     <div class="wrapper" data-dislike-active data-like-active>
         <button class="plus"><img src="images/icon-plus.svg" alt="plus"></button>
-        <p class="score">{{ score }}</p>
+        <p class="score">{{ comment.score }}</p>
         <button class="minus"> <img src=" images/icon-minus.svg" alt="minus"></button>
     </div>
 </template>
@@ -10,10 +10,7 @@
 import { defineProps } from 'vue'
 
 defineProps({
-    score: Number,
-    style: String,
-    replyingTo: String,
-    id: String,
+    comment: Object
 })
 
 </script>
