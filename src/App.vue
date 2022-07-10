@@ -1,12 +1,12 @@
 <template>
     <div class="content">
         <div class="comments">
-            <CommentItem class="comment" v-for="comment, index in data?.comments" :key="index" v-bind="comment"
-                :currentUser="data.currentUser" />
+            <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" v-bind="comment"
+                :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
         </div>
         <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
     </div>
-    <DeleteModal v-show="false" />
+    <DeleteModal v-show="removing" :id="id" @hideModal="hideModal" />
     {{ error }}
 </template>
 
@@ -15,7 +15,7 @@ import CommentItem from './components/CommentItem.vue'
 import CommentAdding from './components/CommentAdding.vue'
 import DeleteModal from './components/DeleteModal.vue'
 import useFetch from './composables/fetch'
-import { provide, watch, ref } from 'vue'
+import { provide, watch, ref, computed } from 'vue'
 
 const { data, error } = window.localStorage.getItem("data") ?
     { "data": ref(JSON.parse(window.localStorage.getItem("data"))), "error": ref(null) } :
@@ -31,6 +31,24 @@ watch(
     { deep: true }
 )
 
+const commentsInOrder = computed(() => {
+    let sortedData = data?.value.comments
+    sortedData.sort((a, b) => {
+        return b.score - a.score
+    })
+    return sortedData
+})
+
+const removing = ref(false)
+var id = ref(null)
+function showModal(commentId) {
+    id.value = commentId
+    removing.value = true
+}
+
+function hideModal() {
+    removing.value = false
+}
 </script>
 
 <style>

@@ -23,7 +23,8 @@
                 <button class="editing-button" @click="edit(id, newContent); editing = !editing">update</button>
             </div>
             <ScoreItem class="comment-score" :score="score" :replyingTo="replyingTo" :id="id" />
-            <button class="comment-delete" v-if="isUserCurrent(user, currentUser)" @click="remove(id)"><img src="
+            <button class="comment-delete" v-if="isUserCurrent(user, currentUser)" @click="$emit('showModal', id)"><img
+                    src="
                 images/icon-delete.svg" alt="delete icon">Delete</button>
             <button class="comment-reply-edit" v-if="isUserCurrent(user, currentUser)" @click="editing = !editing"><img
                     src="images/icon-edit.svg" alt="edit icon">Edit</button>
@@ -36,10 +37,11 @@
             :currentUser="currentUser"></ReplyItem>
         <div class="comment-replies">
             <CommentItem class="comment" v-for="comment, index in replies" :key="index" v-bind="comment"
-                :currentUser="currentUser" />
+                :currentUser="currentUser" @showModal="$emit('showModal', comment.id)" />
         </div>
     </div>
 </template>
+
 
 <script setup>
 import { defineProps, inject, ref } from 'vue'
@@ -62,6 +64,7 @@ const props = defineProps({
 
 const replying = ref(false)
 const editing = ref(false)
+// const removing = ref(false)
 
 const newContent = ref(props.content)
 
@@ -70,7 +73,7 @@ function isUserCurrent(user, currentUser) {
 }
 
 const data = inject('data')
-const { remove, edit } = useComments(data)
+const { edit } = useComments(data)
 
 </script>
 

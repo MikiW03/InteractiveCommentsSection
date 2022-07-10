@@ -5,12 +5,24 @@
             <p class="popup-content">Are you sure you want to delete this comment? This will remove the comment and
                 can't be
                 undone.</p>
-            <button class="popup-btn popup-cancel">No, cancel</button>
-            <button class="popup-btn popup-delete">Yes, delete</button>
+            <button class="popup-btn popup-cancel" @click="$emit('hideModal')">No, cancel</button>
+            <button class="popup-btn popup-delete" @click="remove(id); $emit('hideModal')">Yes, delete</button>
         </div>
     </div>
 </template>
     
+<script setup>
+import useComments from '@/composables/comments';
+import { inject, defineProps } from 'vue'
+
+defineProps({
+    id: String
+})
+
+const data = inject('data')
+const { remove } = useComments(data)
+
+</script>
 
 <style>
 .popup-background {

@@ -1,6 +1,5 @@
 export default function useComments(data) {
   function comment(e, content) {
-    console.log(data);
     addComment(e, content, "", false);
   }
 
