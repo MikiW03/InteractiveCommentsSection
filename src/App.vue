@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="comments">
-            <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" v-bind="comment"
+            <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :comment="comment"
                 :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
         </div>
         <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />

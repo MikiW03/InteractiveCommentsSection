@@ -2,41 +2,41 @@
     <div>
         <div class="comment-card">
             <div class="comment-header">
-                <img class="comment-img" :src="user.image.png" :alt="'avatar of ' + user.username">
+                <img class="comment-img" :src="comment.user.image.png" :alt="'avatar of ' + comment.user.username">
                 <span class="comment-username">
-                    {{ user.username }}
-                    <span class="you" v-if="isUserCurrent(user, currentUser)">
+                    {{ comment.user.username }}
+                    <span class="you" v-if="isUserCurrent(comment.user, currentUser)">
                         you
                     </span>
                 </span>
-                <span class="comment-date">{{ createdAt }}
+                <span class="comment-date">{{ comment.createdAt }}
                 </span>
             </div>
             <div class="comment-content" v-if="!editing">
-                <span class="comment-reply-tag" v-if="replyingTo">
-                    @{{ replyingTo }}
+                <span class="comment-reply-tag" v-if="comment.replyingTo">
+                    @{{ comment.replyingTo }}
                 </span>
-                {{ content }}
+                {{ comment.content }}
             </div>
             <div v-else class="editing-field">
                 <textarea type="text" class="editing-input" v-model="newContent"></textarea>
-                <button class="editing-button" @click="edit(id, newContent); editing = !editing">update</button>
+                <button class="editing-button" @click="edit(comment.id, newContent); editing = !editing">update</button>
             </div>
-            <ScoreItem class="comment-score" :score="score" :replyingTo="replyingTo" :id="id" />
-            <button class="comment-delete" v-if="isUserCurrent(user, currentUser)" @click="$emit('showModal', id)"><img
-                    src="
+            <ScoreItem class="comment-score" :score="comment.score" :replyingTo="comment.replyingTo" :id="comment.id" />
+            <button class="comment-delete" v-if="isUserCurrent(comment.user, currentUser)"
+                @click="$emit('showModal', comment.id)"><img src="
                 images/icon-delete.svg" alt="delete icon">Delete</button>
-            <button class="comment-reply-edit" v-if="isUserCurrent(user, currentUser)" @click="editing = !editing"><img
-                    src="images/icon-edit.svg" alt="edit icon">Edit</button>
+            <button class="comment-reply-edit" v-if="isUserCurrent(comment.user, currentUser)"
+                @click="editing = !editing"><img src="images/icon-edit.svg" alt="edit icon">Edit</button>
             <button class="comment-reply-edit" v-else @click="replying = !replying"><img src="images/icon-reply.svg"
                     alt="reply icon">
                 Reply</button>
 
         </div>
-        <ReplyItem v-if="replying" @replied="replying = false" :id="id" :replyingTo="user.username"
+        <ReplyItem v-if="replying" @replied="replying = false" :id="comment.id" :replyingTo="comment.user.username"
             :currentUser="currentUser"></ReplyItem>
         <div class="comment-replies">
-            <CommentItem class="comment" v-for="comment, index in replies" :key="index" v-bind="comment"
+            <CommentItem class="comment" v-for="comment, index in comment.replies" :key="index" :comment="comment"
                 :currentUser="currentUser" @showModal="$emit('showModal', comment.id)" />
         </div>
     </div>
@@ -51,14 +51,7 @@ import useComments from '../composables/comments'
 
 
 const props = defineProps({
-    content: String,
-    createdAt: String,
-    id: String,
-    replies: Array,
-    score: Number,
-    user: Object,
-    replyingTo: String,
-
+    comment: Object,
     currentUser: Object,
 })
 
