@@ -2,8 +2,7 @@
     <div class="reply">
         <img class="reply-img" :src="currentUser?.image.png" alt="image of current user">
         <textarea class="reply-input" v-model="content" placeholder="Add a comment..."></textarea>
-        <button class="reply-btn"
-            @click="reply($event, content, replyingTo, comment.id); $emit('replied')">reply</button>
+        <button class="reply-btn" @click="reply($event, content, replyingTo, ogId); $emit('replied')">reply</button>
     </div>
 </template>
 
@@ -15,7 +14,8 @@ defineProps({
     comment: Object,
     currentUser: Object,
 
-    replyingTo: String
+    replyingTo: String,
+    ogId: Number,
 })
 
 const content = ref("")

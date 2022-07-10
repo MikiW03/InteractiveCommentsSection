@@ -1,12 +1,12 @@
 <template>
     <div class="content">
         <div class="comments">
-            <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :comment="comment"
-                :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
+            <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :ogId="comment.id"
+                :comment="comment" :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
         </div>
         <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
     </div>
-    <DeleteModal v-show="removing" :id="id" @hideModal="hideModal" />
+    <DeleteModal v-show="removing" :comment="comment" :ogId="ogId" @hideModal="hideModal" />
     {{ error }}
 </template>
 
@@ -40,9 +40,11 @@ const commentsInOrder = computed(() => {
 })
 
 const removing = ref(false)
-var id = ref(null)
-function showModal(commentId) {
-    id.value = commentId
+var comment = ref(null)
+var ogId = ref(null)
+function showModal(commentObj, id) {
+    comment.value = commentObj
+    ogId.value = id
     removing.value = true
 }
 

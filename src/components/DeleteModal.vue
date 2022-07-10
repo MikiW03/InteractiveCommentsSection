@@ -6,7 +6,8 @@
                 can't be
                 undone.</p>
             <button class="popup-btn popup-cancel" @click="$emit('hideModal')">No, cancel</button>
-            <button class="popup-btn popup-delete" @click="remove(id); $emit('hideModal')">Yes, delete</button>
+            <button class="popup-btn popup-delete" @click="remove(comment, ogId); $emit('hideModal')">Yes,
+                delete</button>
         </div>
     </div>
 </template>
@@ -16,7 +17,8 @@ import useComments from '@/composables/comments';
 import { inject, defineProps } from 'vue'
 
 defineProps({
-    id: String
+    comment: Object,
+    ogId: Number,
 })
 
 const data = inject('data')

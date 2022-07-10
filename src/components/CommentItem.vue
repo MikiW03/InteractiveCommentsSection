@@ -20,11 +20,12 @@
             </div>
             <div v-else class="editing-field">
                 <textarea type="text" class="editing-input" v-model="newContent"></textarea>
-                <button class="editing-button" @click="edit(comment.id, newContent); editing = !editing">update</button>
+                <button class="editing-button"
+                    @click="edit(ogId, comment.id, newContent); editing = !editing">update</button>
             </div>
             <ScoreItem class="comment-score" :comment="comment" />
             <button class="comment-delete" v-if="isUserCurrent(comment.user, currentUser)"
-                @click="$emit('showModal', comment.id)"><img src="
+                @click="$emit('showModal', comment, ogId)"><img src="
                 images/icon-delete.svg" alt="delete icon">Delete</button>
             <button class="comment-reply-edit" v-if="isUserCurrent(comment.user, currentUser)"
                 @click="editing = !editing"><img src="images/icon-edit.svg" alt="edit icon">Edit</button>
@@ -33,12 +34,12 @@
                 Reply</button>
 
         </div>
-        <ReplyItem v-if="replying" @replied="replying = false" :comment="comment" :currentUser="currentUser"
-            :replyingTo="comment.user.username">
+        <ReplyItem v-if="replying" @replied="replying = false" :currentUser="currentUser"
+            :replyingTo="comment.user.username" :ogId="ogId">
         </ReplyItem>
         <div class="comment-replies">
-            <CommentItem class="comment" v-for="comment in comment.replies" :key="comment.id" :comment="comment"
-                :currentUser="currentUser" @showModal="$emit('showModal', comment.id)" />
+            <CommentItem class="comment" v-for="reply in comment.replies" :key="reply.id" :ogId="comment.id"
+                :comment="reply" :currentUser="currentUser" @showModal="$emit('showModal', reply, ogId)" />
         </div>
     </div>
 </template>
@@ -54,6 +55,7 @@ import useComments from '../composables/comments'
 const props = defineProps({
     comment: Object,
     currentUser: Object,
+    ogId: Number,
 })
 
 const replying = ref(false)
