@@ -24,8 +24,9 @@ const { comment } = useComments(data)
 <style>
 .comment-adding {
     background-color: var(--white);
-    margin: 0 1em 2em 1em;
     padding: 1em;
+    margin-top: 1em;
+    width: 100%;
     border-radius: 5px;
     box-shadow: 0 0 5px 5px var(--light-gray);
     display: grid;

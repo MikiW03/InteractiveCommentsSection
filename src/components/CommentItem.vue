@@ -21,9 +21,9 @@
             <div v-else class="editing-field">
                 <textarea type="text" class="editing-input" v-model="newContent"></textarea>
                 <button class="editing-button"
-                    @click="edit(ogId, comment.id, newContent); editing = !editing">update</button>
+                    @click="edit(ogId, comment, newContent); editing = !editing">update</button>
             </div>
-            <ScoreItem class="comment-score" :comment="comment" />
+            <ScoreItem class="comment-score" :comment="comment" :ogId="ogId"/>
             <button class="comment-delete" v-if="isUserCurrent(comment.user, currentUser)"
                 @click="$emit('showModal', comment, ogId)"><img src="
                 images/icon-delete.svg" alt="delete icon">Delete</button>

@@ -1,17 +1,23 @@
 <template >
     <div class="wrapper" data-dislike-active data-like-active>
-        <button class="plus"><img src="images/icon-plus.svg" alt="plus"></button>
+        <button class="plus" @click="incrementScore(comment, ogId)"><img src="images/icon-plus.svg" alt="plus"></button>
         <p class="score">{{ comment.score }}</p>
-        <button class="minus"> <img src=" images/icon-minus.svg" alt="minus"></button>
+        <button class="minus" @click="decrementScore(comment, ogId)"> <img src=" images/icon-minus.svg"
+                alt="minus"></button>
     </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, inject } from 'vue'
+import useComments from '../composables/comments'
 
 defineProps({
-    comment: Object
+    comment: Object,
+    ogId: Number
 })
+
+const data = inject('data')
+const { incrementScore, decrementScore } = useComments(data)
 
 </script>
 

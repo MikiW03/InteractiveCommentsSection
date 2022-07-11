@@ -33,8 +33,8 @@ export default function useComments(data) {
     }
   }
 
-  function edit(ogId, commentId, content) {
-    const isReply = ogId != commentId;
+  function edit(ogId, comment, content) {
+    const isReply = ogId != comment.id;
     if (!isReply) {
       data.value.comments[
         data.value.comments.findIndex((obj) => obj.id === ogId)
@@ -45,7 +45,7 @@ export default function useComments(data) {
       ].replies[
         data.value.comments[
           data.value.comments.findIndex((obj) => obj.id === ogId)
-        ].replies.findIndex((obj) => obj.id === commentId)
+        ].replies.findIndex((obj) => obj.id === comment.id)
       ].content = content;
     }
   }
@@ -69,10 +69,46 @@ export default function useComments(data) {
     }
   }
 
+  function incrementScore(comment, ogId) {
+    const isReply = ogId != comment.id;
+    if (!isReply) {
+      data.value.comments[
+        data.value.comments.findIndex((obj) => obj.id === ogId)
+      ].score++;
+    } else {
+      data.value.comments[
+        data.value.comments.findIndex((obj) => obj.id === ogId)
+      ].replies[
+        data.value.comments[
+          data.value.comments.findIndex((obj) => obj.id === ogId)
+        ].replies.findIndex((obj) => obj.id === comment.id)
+      ].score++;
+    }
+  }
+
+  function decrementScore(comment, ogId) {
+    const isReply = ogId != comment.id;
+    if (!isReply) {
+      data.value.comments[
+        data.value.comments.findIndex((obj) => obj.id === ogId)
+      ].score--;
+    } else {
+      data.value.comments[
+        data.value.comments.findIndex((obj) => obj.id === ogId)
+      ].replies[
+        data.value.comments[
+          data.value.comments.findIndex((obj) => obj.id === ogId)
+        ].replies.findIndex((obj) => obj.id === comment.id)
+      ].score--;
+    }
+  }
+
   return {
     comment,
     reply,
     remove,
     edit,
+    incrementScore,
+    decrementScore,
   };
 }

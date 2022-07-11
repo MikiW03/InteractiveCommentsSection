@@ -109,7 +109,6 @@ button:hover {
 }
 
 .comments {
-    padding: 1em 1em 1em 1em;
 
     display: flex;
     flex-direction: column;
