@@ -4,13 +4,11 @@ export default function useComments(data) {
   }
 
   function reply(e, content, replyingTo, ogId) {
-    console.log(ogId);
     addComment(e, content, replyingTo, true, ogId);
   }
 
   function addComment(e, content, replyingTo, reply, ogId = undefined) {
-    const id = document.querySelectorAll(".comment").length + 1;
-
+    const id = Math.floor(Math.random() * Date.now());
     const comment = {
       id: id,
       createdAt: new Date().toLocaleString("en-us", {
@@ -36,11 +34,6 @@ export default function useComments(data) {
   }
 
   function edit(ogId, commentId, content) {
-    console.log(
-      data.value.comments[
-        data.value.comments.findIndex((obj) => obj.id === ogId)
-      ].replies[data.value.comments.findIndex((obj) => obj.id === commentId)],
-    );
     const isReply = ogId != commentId;
     if (!isReply) {
       data.value.comments[
