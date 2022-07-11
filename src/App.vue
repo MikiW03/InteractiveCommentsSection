@@ -113,6 +113,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin: 1em 1em;
 }
 
 @media screen and (min-width: 750px) {

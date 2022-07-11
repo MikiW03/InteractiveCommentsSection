@@ -1,7 +1,8 @@
 <template>
     <div>
         <textarea class="comment-adding-input" v-model="content" type="text" placeholder="Add a comment..."></textarea>
-        <img class="comment-adding-img" :src="currentUser?.image.png" alt="image of current user">
+        <img class="comment-adding-img" :src="currentUser?.image.png" alt="image of current user" width="35"
+            height="35">
         <button class="comment-adding-btn" @click="comment($event, content)">send</button>
     </div>
 </template>
@@ -25,8 +26,7 @@ const { comment } = useComments(data)
 .comment-adding {
     background-color: var(--white);
     padding: 1em;
-    margin-top: 1em;
-    width: 100%;
+    margin: 1em 1em 2em 1em;
     border-radius: 5px;
     box-shadow: 0 0 5px 5px var(--light-gray);
     display: grid;

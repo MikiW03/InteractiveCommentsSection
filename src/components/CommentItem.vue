@@ -2,7 +2,8 @@
     <div>
         <div class="comment-card">
             <div class="comment-header">
-                <img class="comment-img" :src="comment.user.image.png" :alt="'avatar of ' + comment.user.username">
+                <img class="comment-img" :src="comment.user.image.png" :alt="'avatar of ' + comment.user.username"
+                    width="35" height="35">
                 <span class="comment-username">
                     {{ comment.user.username }}
                     <span class="you" v-if="isUserCurrent(comment.user, currentUser)">
@@ -23,14 +24,15 @@
                 <button class="editing-button"
                     @click="edit(ogId, comment, newContent); editing = !editing">update</button>
             </div>
-            <ScoreItem class="comment-score" :comment="comment" :ogId="ogId"/>
+            <ScoreItem class="comment-score" :comment="comment" :ogId="ogId" />
             <button class="comment-delete" v-if="isUserCurrent(comment.user, currentUser)"
                 @click="$emit('showModal', comment, ogId)"><img src="
-                images/icon-delete.svg" alt="delete icon">Delete</button>
+                images/icon-delete.svg" alt="delete icon" width="12" height="14">Delete</button>
             <button class="comment-reply-edit" v-if="isUserCurrent(comment.user, currentUser)"
-                @click="editing = !editing"><img src="images/icon-edit.svg" alt="edit icon">Edit</button>
+                @click="editing = !editing"><img src="images/icon-edit.svg" alt="edit icon" width="14"
+                    height="14">Edit</button>
             <button class="comment-reply-edit" v-else @click="replying = !replying"><img src="images/icon-reply.svg"
-                    alt="reply icon">
+                    alt="reply icon" width="14" height="12">
                 Reply</button>
 
         </div>

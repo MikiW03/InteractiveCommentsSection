@@ -1,9 +1,10 @@
 <template >
     <div class="wrapper" data-dislike-active data-like-active>
-        <button class="plus" @click="incrementScore(comment, ogId)"><img src="images/icon-plus.svg" alt="plus"></button>
+        <button class="plus" @click="incrementScore(comment, ogId)"><img src="images/icon-plus.svg" alt="plus"
+                width="11" height="11"></button>
         <p class="score">{{ comment.score }}</p>
-        <button class="minus" @click="decrementScore(comment, ogId)"> <img src=" images/icon-minus.svg"
-                alt="minus"></button>
+        <button class="minus" @click="decrementScore(comment, ogId)"> <img src=" images/icon-minus.svg" alt="minus"
+                width="11" height="3"></button>
     </div>
 </template>
 

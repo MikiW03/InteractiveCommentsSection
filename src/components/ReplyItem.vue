@@ -1,6 +1,6 @@
 <template>
     <div class="reply">
-        <img class="reply-img" :src="currentUser?.image.png" alt="image of current user">
+        <img class="reply-img" :src="currentUser?.image.png" alt="image of current user" width="35" height="35">
         <textarea class="reply-input" v-model="content" placeholder="Add a comment..."></textarea>
         <button class="reply-btn" @click="reply($event, content, replyingTo, ogId); $emit('replied')">reply</button>
     </div>
