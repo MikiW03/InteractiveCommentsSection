@@ -31,8 +31,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://github.com/MikiW03/InteractiveCommentsSection](https://github.com/MikiW03/InteractiveCommentsSection)
-- Live Site URL: [http://interactive-comments-section-sable.vercel.app](http://interactive-comments-section-sable.vercel.app)
+- Solution URL: [www.frontendmentor.io](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9/hub/interactive-comments-section-using-vuejs-iXR_mc3puo)
+- Live Site URL: [https://interactive-comments-section-sable.vercel.app](http://interactive-comments-section-sable.vercel.app)
 
 ## My process
 
