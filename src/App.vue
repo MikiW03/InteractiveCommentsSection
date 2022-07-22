@@ -16,7 +16,8 @@ import CommentItem from './components/CommentItem.vue'
 import CommentAdding from './components/CommentAdding.vue'
 import DeleteModal from './components/DeleteModal.vue'
 import useFetch from './composables/fetch'
-import { provide, watch, ref, computed } from 'vue'
+import syncDate from './composables/syncDate'
+import { provide, watch, ref, computed, onMounted } from 'vue'
 
 const { data, error } = window.localStorage.getItem("data") ?
     { "data": ref(JSON.parse(window.localStorage.getItem("data"))), "error": ref(null) } :
@@ -31,6 +32,10 @@ watch(
     },
     { deep: true }
 )
+
+onMounted(() => {
+    syncDate(data)
+})
 
 const commentsInOrder = computed(() => {
     let sortedData = data?.value.comments

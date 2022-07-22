@@ -1,3 +1,5 @@
+import syncDate from "./syncDate";
+
 export default function useComments(data) {
   function comment(e, content) {
     addComment(e, content, "", false);
@@ -11,6 +13,7 @@ export default function useComments(data) {
     const id = Math.floor(Math.random() * Date.now());
     const comment = {
       id: id,
+      date: new Date(),
       createdAt: new Date().toLocaleString("en-us", {
         dateStyle: "long",
         timeStyle: "short",
@@ -31,6 +34,8 @@ export default function useComments(data) {
       ].replies.push(comment);
       e.currentTarget.parentElement.childNodes[1].value = "";
     }
+
+    syncDate(data);
   }
 
   function edit(ogId, comment, content) {
