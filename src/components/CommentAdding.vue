@@ -77,6 +77,7 @@ const { comment } = useComments(data)
     border-radius: 10px;
     color: var(--white);
     font-weight: 700;
+    letter-spacing: 1.5px;
 
     grid-area: btn;
 }

@@ -1,4 +1,5 @@
 <template>
+    <UserSelect></UserSelect>
     <div class="content">
         <div class="comments">
             <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :ogId="comment.id"
@@ -8,13 +9,13 @@
     </div>
     <DeleteModal @wheel.prevent @touchmove.prevent @scroll.prevent v-show="removing" :comment="comment" :ogId="ogId"
         @hideModal="hideModal" />
-    {{ error }}
 </template>
 
 <script setup>
 import CommentItem from './components/CommentItem.vue'
 import CommentAdding from './components/CommentAdding.vue'
 import DeleteModal from './components/DeleteModal.vue'
+import UserSelect from './components/UserSelect.vue'
 import useFetch from './composables/fetch'
 import syncDate from './composables/syncDate'
 import { provide, watch, ref, computed, onMounted } from 'vue'
@@ -22,6 +23,8 @@ import { provide, watch, ref, computed, onMounted } from 'vue'
 const { data, error } = window.localStorage.getItem("data") ?
     { "data": ref(JSON.parse(window.localStorage.getItem("data"))), "error": ref(null) } :
     useFetch("data.json")
+
+console.log(error)
 
 provide('data', data)
 
@@ -106,11 +109,14 @@ button:hover {
 
 #app {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .content {
     max-width: 700px;
+    margin-top: 50px;
 }
 
 .comments {
