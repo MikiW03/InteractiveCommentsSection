@@ -26,7 +26,7 @@ const { comment } = useComments(data)
 .comment-adding {
     background-color: var(--white);
     padding: 1em;
-    margin: 1em 1em 2em 1em;
+    margin: 1em;
     border-radius: 5px;
     box-shadow: 0 0 5px 5px var(--light-gray);
     display: grid;

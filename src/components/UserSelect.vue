@@ -11,12 +11,23 @@
 <script setup>
 import SelectMenu from './SelectMenu.vue'
 
-import { inject, ref } from "vue";
+import { inject, onMounted, ref, watch } from "vue";
 
 const data = inject('data')
 
-const menuVisible = ref(false)
+const body = ref(null)
+onMounted(() => {
+    body.value = document.querySelector("body")
+})
 
+const menuVisible = ref(false)
+watch(
+    () => menuVisible.value,
+    () => {
+        body?.value?.classList.toggle('menuActive')
+    },
+    { immediate: true }
+)
 
 </script>
 

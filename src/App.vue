@@ -1,33 +1,31 @@
 <template>
-    <UserSelect></UserSelect>
-    <div class="content">
-        <div class="comments">
-            <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :ogId="comment.id"
-                :comment="comment" :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
+    <template v-if="data">
+        <UserSelect></UserSelect>
+        <div class="content">
+            <div class="comments">
+                <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :ogId="comment.id"
+                    :comment="comment" :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
+            </div>
+            <CommentAdding class="comment-adding" :currentUser="data.currentUser" />
         </div>
-        <CommentAdding class="comment-adding" :currentUser="data?.currentUser" />
-    </div>
-    <DeleteModal @wheel.prevent @touchmove.prevent @scroll.prevent v-show="removing" :comment="comment" :ogId="ogId"
-        @hideModal="hideModal" />
+        <DeleteModal @wheel.prevent @touchmove.prevent @scroll.prevent v-show="removing" :comment="comment" :ogId="ogId"
+            @hideModal="hideModal" />
+    </template>
+    <template v-else-if="error">
+        {{ error }}
+    </template>
 </template>
 
 <script setup>
+import originalData from '../public/data'
 import CommentItem from './components/CommentItem.vue'
 import CommentAdding from './components/CommentAdding.vue'
 import DeleteModal from './components/DeleteModal.vue'
 import UserSelect from './components/UserSelect.vue'
-import useFetch from './composables/fetch'
 import syncDate from './composables/syncDate'
 import { provide, watch, ref, computed, onMounted } from 'vue'
 
-const { data, error } = window.localStorage.getItem("data") ?
-    { "data": ref(JSON.parse(window.localStorage.getItem("data"))), "error": ref(null) } :
-    useFetch("data.json")
-
-console.log(error)
-
-provide('data', data)
-
+const data = ref(null)
 watch(
     () => data.value,
     (newValue) => {
@@ -35,6 +33,17 @@ watch(
     },
     { deep: true }
 )
+
+if (window.localStorage.getItem("data")) {
+    console.log("storage")
+    data.value = JSON.parse(window.localStorage.getItem("data"))
+} else {
+    console.log("og")
+    data.value = originalData
+}
+
+provide('data', data)
+
 
 onMounted(() => {
     syncDate(data)
@@ -95,6 +104,10 @@ body {
     background-color: var(--very-light-gray);
     font-family: Rubik, sans-serif;
     font-size: 16px;
+}
+
+body.menuActive {
+    overflow: hidden
 }
 
 button,
