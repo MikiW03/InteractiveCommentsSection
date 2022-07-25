@@ -3,6 +3,7 @@
         <div class="currentUser" @click="menuVisible = !menuVisible">
             <img class="avatar" :src="data.currentUser.image.png" alt="current user avatar">
             <p class="name">{{ data.currentUser.username }}</p>
+            <p class="description">Change user</p>
         </div>
     </div>
     <SelectMenu @closeMenu="menuVisible = false" v-if="menuVisible"></SelectMenu>
@@ -66,5 +67,11 @@ watch(
 .name {
     font-weight: 700;
     color: var(--light-gray)
+}
+
+.description {
+    font-size: 10px;
+    color: var(--light-gray);
+    text-transform: lowercase;
 }
 </style>
