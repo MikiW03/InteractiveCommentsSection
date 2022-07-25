@@ -35,10 +35,11 @@ watch(
 )
 
 if (window.localStorage.getItem("data")) {
-    console.log("storage")
     data.value = JSON.parse(window.localStorage.getItem("data"))
+    if (!data.value.users) {
+        data.value = originalData
+    }
 } else {
-    console.log("og")
     data.value = originalData
 }
 
