@@ -20,7 +20,7 @@
                 {{ comment.content }}
             </div>
             <div v-else class="editing-field">
-                <textarea type="text" class="editing-input" v-model="newContent"></textarea>
+                <textarea class="editing-input" v-model="newContent"></textarea>
                 <button class="editing-button"
                     @click="edit(ogId, comment, newContent); editing = !editing">update</button>
             </div>
