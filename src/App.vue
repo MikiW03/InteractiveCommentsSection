@@ -2,14 +2,16 @@
     <template v-if="data">
         <UserSelect></UserSelect>
         <div class="content">
-            <div class="comments">
+            <TransitionGroup tag="div" class="comments" name="comments-list">
                 <CommentItem class="comment" v-for="comment in commentsInOrder" :key="comment.id" :ogId="comment.id"
                     :comment="comment" :currentUser="data.currentUser" @showModal="showModal"></CommentItem>
-            </div>
+            </TransitionGroup>
             <CommentAdding class="comment-adding" :currentUser="data.currentUser" />
         </div>
-        <DeleteModal @wheel.prevent @touchmove.prevent @scroll.prevent v-show="removing" :comment="comment" :ogId="ogId"
-            @hideModal="hideModal" />
+        <Transition name="modal">
+            <DeleteModal @wheel.prevent @touchmove.prevent @scroll.prevent v-show="removing" :comment="comment"
+                :ogId="ogId" @hideModal="hideModal" />
+        </Transition>
     </template>
     <template v-else-if="error">
         {{ error }}
@@ -134,7 +136,7 @@ button:hover {
 }
 
 .comments {
-
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -145,5 +147,42 @@ button:hover {
     :root {
         --reply-indentation: 2.5em;
     }
+}
+
+/* TRANSITIONS */
+
+.comments-list-move,
+.comments-list-enter-active,
+.comments-list-leave-active {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.comments-list-enter-from,
+.comments-list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+
+.modal-enter-active,
+.modal-leave-active {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.modal-enter-from,
+.modal-leave-to {
+    opacity: 0;
+}
+
+
+.reply-enter-active,
+.reply-leave-active {
+    transition: all 0.5s ease;
+}
+
+.reply-enter-from,
+.reply-leave-to {
+    transform: scaleY(0);
+    transform-origin: top;
 }
 </style>

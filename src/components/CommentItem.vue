@@ -36,13 +36,15 @@
                 Reply</button>
 
         </div>
-        <ReplyItem v-if="replying" @replied="replying = false" :currentUser="currentUser"
-            :replyingTo="comment.user.username" :ogId="ogId">
-        </ReplyItem>
-        <div class="comment-replies">
+        <Transition name="reply">
+            <ReplyItem v-if="replying" @replied="replying = false" :currentUser="currentUser"
+                :replyingTo="comment.user.username" :ogId="ogId">
+            </ReplyItem>
+        </Transition>
+        <TransitionGroup tag="div" class="comment-replies" name="comments-list">
             <CommentItem class="comment" v-for="reply in comment.replies" :key="reply.id" :ogId="comment.id"
                 :comment="reply" :currentUser="currentUser" @showModal="$emit('showModal', reply, ogId)" />
-        </div>
+        </TransitionGroup>
     </div>
 </template>
 
@@ -113,7 +115,7 @@ const { edit } = useComments(data)
 }
 
 .comment-username {
-    font-weight: 700;
+    font-weight: 500;
 
     display: flex;
     align-items: center;
@@ -151,6 +153,11 @@ const { edit } = useComments(data)
 
 .comment-delete {
     color: var(--soft-red);
+}
+
+.comment-content {
+    color: var(--grayish-blue);
+    line-height: 1.5;
 }
 
 .comment-replies {

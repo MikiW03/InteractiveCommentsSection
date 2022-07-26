@@ -6,7 +6,9 @@
             <p class="description">Change user</p>
         </div>
     </div>
-    <SelectMenu @closeMenu="menuVisible = false" v-if="menuVisible"></SelectMenu>
+    <Transition name="modal">
+        <SelectMenu @closeMenu="menuVisible = false" v-if="menuVisible"></SelectMenu>
+    </Transition>
 </template>
 
 <script setup>

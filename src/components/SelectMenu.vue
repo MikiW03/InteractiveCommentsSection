@@ -26,6 +26,8 @@ const data = inject('data')
     justify-content: center;
 
     background-color: rgba(0, 0, 0, 0.5);
+
+    z-index: 999;
 }
 
 .selectMenu {
@@ -42,5 +44,7 @@ const data = inject('data')
     background-color: var(--white);
 
     overflow: auto;
+
+    z-index: 1000;
 }
 </style>
