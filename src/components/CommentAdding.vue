@@ -1,6 +1,6 @@
 <template>
     <div>
-        <textarea class="comment-adding-input" v-model="content" type="text" placeholder="Add a comment..."></textarea>
+        <textarea class="comment-adding-input" v-model="content" placeholder="Add a comment..."></textarea>
         <img class="comment-adding-img" :src="currentUser?.image.png" alt="image of current user" width="35"
             height="35">
         <button class="comment-adding-btn" @click="comment($event, content)">send</button>
