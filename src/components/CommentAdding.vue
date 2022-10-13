@@ -3,7 +3,7 @@
         <textarea class="comment-adding-input" v-model="content" placeholder="Add a comment..."></textarea>
         <img class="comment-adding-img" :src="currentUser?.image.png" alt="image of current user" width="35"
             height="35">
-        <button class="comment-adding-btn" @click="comment($event, content)">send</button>
+        <button class="comment-adding-btn" @click="comment($event, content); clearContent()">send</button>
     </div>
 </template>
 
@@ -16,6 +16,9 @@ defineProps({
 })
 
 const content = ref(null)
+function clearContent() {
+    content.value = ""
+}
 
 const data = inject('data')
 const { comment } = useComments(data)

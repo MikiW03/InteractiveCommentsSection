@@ -27,12 +27,10 @@ export default function useComments(data) {
 
     if (!reply) {
       data.value.comments.push(comment);
-      e.currentTarget.parentElement.childNodes[0].value = "";
     } else {
       data.value.comments[
         data.value.comments.findIndex((obj) => obj.id === ogId)
       ].replies.push(comment);
-      e.currentTarget.parentElement.childNodes[1].value = "";
     }
 
     syncDate(data);
